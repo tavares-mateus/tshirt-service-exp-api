@@ -3,7 +3,7 @@
     <http:listener-config name="t-shirt-service-experience-httpListenerConfig">
         <http:listener-connection host="0.0.0.0" port="8081" />
     </http:listener-config>
-    <apikit:config name="t-shirt-service-experience-config" api="resource::f36a6db6-b129-4fa3-9f09-674196c546bf:t-shirt-service-experience-api:1.0.0:raml:zip:t-shirt-service-experience.raml" outboundHeadersMapName="outboundHeaders" httpStatusVarName="httpStatus" />
+    <apikit:config name="t-shirt-service-experience-config" api="resource::f36a6db6-b129-4fa3-9f09-674196c546bf:t-shirt-service-experience-api:1.0.3:raml:zip:t-shirt-service-experience.raml" outboundHeadersMapName="outboundHeaders" httpStatusVarName="httpStatus" />
     <flow name="t-shirt-service-experience-main">
         <http:listener config-ref="t-shirt-service-experience-httpListenerConfig" path="/api/*">
             <http:response statusCode="#[vars.httpStatus default 200]">
@@ -157,18 +157,6 @@ output application/json
             </ee:message>
         </ee:transform>
     </flow>
-    <flow name="get:\inventory:application\json:t-shirt-service-experience-config">
-        <ee:transform xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
-            <ee:message>
-                <ee:set-payload><![CDATA[%dw 2.0
-output application/json
----
-{
-  errorMessage: "Bad Request! Please review the data."
-}]]></ee:set-payload>
-            </ee:message>
-        </ee:transform>
-    </flow>
     <flow name="get:\orders:t-shirt-service-experience-config">
         <ee:transform xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
             <ee:message>
@@ -264,6 +252,48 @@ output application/json
 ---
 {
   message: "Order created!"
+}]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+    </flow>
+    <flow name="get:\inventory:t-shirt-service-experience-config">
+        <ee:transform xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+[
+  {
+    productCode: 121,
+    productPrice: 59.9,
+    size: "L",
+    description: "Red superman t-shirt",
+    count: 33
+  }, 
+  {
+    productCode: 115,
+    productPrice: 39.9,
+    size: "S",
+    description: "Black batman t-shirt",
+    count: 25
+  }
+]]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+    </flow>
+    <flow name="put:\orders\(orderId)\track:application\json:t-shirt-service-experience-config">
+        <ee:transform xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core">
+            <ee:variables>
+                <ee:set-variable variableName="orderId">attributes.uriParams.'orderId'</ee:set-variable>
+            </ee:variables>
+        </ee:transform>
+        <ee:transform xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+  message: "Order track status updated!"
 }]]></ee:set-payload>
             </ee:message>
         </ee:transform>
