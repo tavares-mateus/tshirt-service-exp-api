@@ -1,0 +1,11 @@
+http:
+  port: "8081"
+
+process:
+  host: "tshirt-service-prc-api.us-e2.cloudhub.io"
+  port: "80"
+  protocol: "HTTP"
+  basepath: "/api"
+  timeout: "10000"
+  clientid: "6f61140f49b148fca8ca87fccbf6432b"
+  clientsecret: "c82dd0376A084061AbA657322F56a803"

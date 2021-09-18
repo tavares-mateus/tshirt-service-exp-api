@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:t-shirt-service-process-api="http://www.mulesoft.org/schema/mule/t-shirt-service-process-api" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/t-shirt-service-process-api http://www.mulesoft.org/schema/mule/t-shirt-service-process-api/current/mule-t-shirt-service-process-api.xsd">
+	<flow name="getOrders" doc:id="ac07ceaa-657d-41dd-a91d-b30c12a329ca" >
+		<t-shirt-service-process-api:get-orders doc:name="Get orders" doc:id="88f8af3c-ce10-4f0d-911a-2fb919bb43d7" config-ref="T_Shirt_Service_Process_API_Config" client-id="${process.clientid}" client-secret="${process.clientsecret}" product-code="#[message.attributes.queryParams.productCode]" size="#[message.attributes.queryParams.size]">
+			<error-mapping sourceType="T-SHIRT-SERVICE-PROCESS-API:NOT_FOUND" targetType="ORDERS:NOT_FOUND" />
+		</t-shirt-service-process-api:get-orders>
+	</flow>
+	<flow name="postOrder" doc:id="1ca7e1b3-b51e-4c07-9cfe-c0850562c08c" >
+		<t-shirt-service-process-api:create-an-order doc:name="Create an order" doc:id="24db16d1-f70d-4382-be50-114879ecf44a" config-ref="T_Shirt_Service_Process_API_Config" client-id="${process.clientid}" client-secret="${process.clientsecret}"/>
+	</flow>
+	<flow name="getAnOrderById" doc:id="b79b933b-b595-4f60-82c3-de91ec063b64" >
+		<t-shirt-service-process-api:get-an-order-by-id doc:name="Get an order by ID" doc:id="a02545da-1fe5-49fd-8a5e-1526967f719e" config-ref="T_Shirt_Service_Process_API_Config" client-id="${process.clientid}" client-secret="${process.clientsecret}" order-id="#[message.attributes.uriParams.orderId]">
+			<error-mapping sourceType="T-SHIRT-SERVICE-PROCESS-API:NOT_FOUND" targetType="ORDERS:NOT_FOUND" />
+		</t-shirt-service-process-api:get-an-order-by-id>
+	</flow>
+	<flow name="deleteAnOrderById" doc:id="8e06bc8d-96ba-4e2e-be53-506282862072" >
+		<t-shirt-service-process-api:delete-an-order-by-id doc:name="Delete an order by ID" doc:id="502da6af-6778-4a52-b738-589aa0c2061e" config-ref="T_Shirt_Service_Process_API_Config" client-id="${process.clientid}" client-secret="${process.clientsecret}" order-id="#[message.attributes.uriParams.orderId]">
+			<error-mapping sourceType="T-SHIRT-SERVICE-PROCESS-API:NOT_FOUND" targetType="ORDERS:NOT_FOUND" />
+		</t-shirt-service-process-api:delete-an-order-by-id>
+	</flow>
+	<flow name="updateAnOrderById" doc:id="3bd9eecb-7597-4b31-b77f-623ee7518e09" >
+		<t-shirt-service-process-api:update-an-order-by-id doc:name="Update an order by ID" doc:id="844ab78d-da41-48fd-b53d-4239a7b5186e" config-ref="T_Shirt_Service_Process_API_Config" order-id="#[message.attributes.uriParams.orderId]" client-id="${process.clientid}" client-secret="${process.clientsecret}">
+			<error-mapping sourceType="T-SHIRT-SERVICE-PROCESS-API:NOT_FOUND" targetType="ORDERS:NOT_FOUND" />
+		</t-shirt-service-process-api:update-an-order-by-id>
+	</flow>
+	<flow name="getAnOrderTrackById" doc:id="29538df9-2b11-4319-8eb6-2a1e23c5b969" >
+		<t-shirt-service-process-api:tracks-the-order doc:name="Tracks the order" doc:id="5dea49fb-04c8-48e3-9cab-aa8aef086c93" config-ref="T_Shirt_Service_Process_API_Config" client-id="${process.clientid}" client-secret="${process.clientsecret}" order-id="#[message.attributes.uriParams.orderId]">
+			<error-mapping sourceType="T-SHIRT-SERVICE-PROCESS-API:NOT_FOUND" targetType="ORDERS:NOT_FOUND" />
+		</t-shirt-service-process-api:tracks-the-order>
+	</flow>
+	<flow name="updateAnOrderTrackById" doc:id="a8d79446-5eb8-4021-a6fe-5f36ea500d04" >
+		<t-shirt-service-process-api:update-the-status-of-an-order doc:name="Update the status of an order" doc:id="dd82aa39-0aba-4ebc-abc4-68737afde6c1" config-ref="T_Shirt_Service_Process_API_Config" client-id="${process.clientid}" client-secret="${process.clientsecret}" order-id="#[message.attributes.uriParams.orderId]">
+			<error-mapping sourceType="T-SHIRT-SERVICE-PROCESS-API:NOT_FOUND" targetType="ORDERS:NOT_FOUND" />
+		</t-shirt-service-process-api:update-the-status-of-an-order>
+	</flow>
+	<flow name="listInventory" doc:id="f67787df-810e-4ad2-b360-431bc545eed8" >
+		<t-shirt-service-process-api:get-inventories doc:name="Get inventories" doc:id="d78d6031-13a2-4860-b26e-fbe0a07696b5" config-ref="T_Shirt_Service_Process_API_Config" client-id="${process.clientid}" client-secret="${process.clientsecret}" product-code="#[message.attributes.queryParams.productCode]" size="#[message.attributes.queryParams.size]" description="#[message.attributes.queryParams.description]">
+			<error-mapping sourceType="T-SHIRT-SERVICE-PROCESS-API:NOT_FOUND" targetType="INVENTORY:NOT_FOUND" />
+		</t-shirt-service-process-api:get-inventories>
+	</flow>
+</mule>

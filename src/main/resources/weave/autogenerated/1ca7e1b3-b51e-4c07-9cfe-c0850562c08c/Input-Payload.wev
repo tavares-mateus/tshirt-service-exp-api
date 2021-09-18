@@ -1,0 +1,17 @@
+%dw 2.0
+
+type auto_1ca7e1b3_b51e_4c07_9cfe_c0850562c08c_Input_Payload = {
+  country: String, 
+  productCode: Number, 
+  size: "S" | "XL" | "L" | "M" | "XXL", 
+  stateOrProvince: String, 
+  address2?: String, 
+  city: String, 
+  price: Number, 
+  address1: String, 
+  postalCode: Number, 
+  name: String, 
+  email: String, 
+  _?: Any
+} {"description": "T-shirt order fields."}
+

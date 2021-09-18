@@ -1,0 +1,7 @@
+%dw 2.0
+
+type auto_a8d79446_5eb8_4021_a6fe_5f36ea500d04_Input_Payload = {
+  status: "DELIVERED" | "IN_TRANSIT" | "WAITING_CARRIER", 
+  _?: Any
+} {"description": "Creates a status for the order."}
+
